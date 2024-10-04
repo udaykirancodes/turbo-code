@@ -1,2 +1,2 @@
-import Problem from './problem.model'
+import Problem from "./problem.model"
 export { Problem }

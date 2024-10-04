@@ -1,19 +1,19 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
 const problemSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, 'Title cannot be empty']
+    required: [true, "Title cannot be empty"]
   },
   description: {
     type: String,
-    required: [true, 'Description cannot be empty']
+    required: [true, "Description cannot be empty"]
   },
   difficulty: {
     type: String,
-    enum: ['easy', 'medium', 'hard'],
-    required: [true, 'Difficulty cannot be empty'],
-    default: 'easy'
+    enum: ["easy", "medium", "hard"],
+    required: [true, "Difficulty cannot be empty"],
+    default: "easy"
   },
   testCases: [
     {
@@ -31,7 +31,7 @@ const problemSchema = new mongoose.Schema({
     {
       language: {
         type: String,
-        enum: ['CPP', 'PYTHON'],
+        enum: ["CPP", "PYTHON"],
         required: true
       },
       startSnippet: {
@@ -50,6 +50,6 @@ const problemSchema = new mongoose.Schema({
   }
 })
 
-const Problem = mongoose.model('Problems', problemSchema)
+const Problem = mongoose.model("Problems", problemSchema)
 
 export default Problem
