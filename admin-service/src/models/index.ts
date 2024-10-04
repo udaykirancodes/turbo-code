@@ -1,2 +1,3 @@
-import Problem from "./problem.model"
-export { Problem }
+import Problems from "./problems.model";
+
+export { Problems };

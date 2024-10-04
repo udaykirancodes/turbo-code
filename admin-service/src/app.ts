@@ -1,8 +1,18 @@
-import express from 'express'
+import express from "express";
 
-const app = express()
+import apiRoutes from "./routes";
+import errorHandler from "./utils/error.handler";
+import requestLogger from "./utils/request-logger";
+
+const app = express();
 
 // middlewares
-app.use(express.json())
+app.use(express.json());
+app.use(requestLogger);
 
-export default app
+// routes
+app.use("/api", apiRoutes);
+
+app.use(errorHandler);
+
+export default app;
