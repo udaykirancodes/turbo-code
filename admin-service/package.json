@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc -b",
-    "start": "npx tsc -b && node ./dist/index.js"
+    "start": "npx tsc -b && node ./dist/index.js",
+    "dev": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",

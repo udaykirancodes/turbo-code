@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-import { logger } from "../config";
 import { NotFoundError } from "../errors";
 import { ProblemRepository } from "../repositories";
 import { ProblemService } from "../services";
@@ -12,7 +11,6 @@ const problemService = new ProblemService(new ProblemRepository());
 // Get All Problems
 async function getProblems(req: Request, res: Response, next: NextFunction) {
   try {
-    logger.info("Get All Problems");
     const problems = await problemService.getProblems();
     if (!problems) {
       return new NotFoundError("Problems Not Found", {});
