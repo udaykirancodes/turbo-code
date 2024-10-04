@@ -18,11 +18,11 @@ const ProblemSchema = new mongoose.Schema({
   testCases: [
     {
       input: {
-        type: Array,
+        type: String,
         required: true,
       },
       output: {
-        type: Array,
+        type: String,
         required: true,
       },
     },
@@ -31,7 +31,7 @@ const ProblemSchema = new mongoose.Schema({
     {
       language: {
         type: String,
-        enum: ["CPP", "JAVA", "PYTHON"],
+        enum: ["CPP", "PYTHON"],
         required: true,
       },
       startSnippet: {

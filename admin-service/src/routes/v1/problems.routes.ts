@@ -22,6 +22,10 @@ problemRouter.get("/:id", problemsController.getProblem);
 problemRouter.delete("/:id", problemsController.deleteProblem);
 
 // edit problem
-problemRouter.patch("/:id", problemsController.editProblem);
+problemRouter.patch(
+  "/:id",
+  validate(ProblemZodSchema),
+  problemsController.editProblem
+);
 
 export default problemRouter;

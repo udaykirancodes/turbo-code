@@ -7,8 +7,8 @@ const CodeStub = z.object({
   endSnippet: z.string().min(1, "end snippet is required"),
 });
 const TestCaseZodSchema = z.object({
-  input: z.array(z.string()).optional(),
-  output: z.array(z.string()).optional(),
+  input: z.string(z.string()).optional(),
+  output: z.string(z.string()).optional(),
 });
 
 const ProblemZodSchema = z.object({

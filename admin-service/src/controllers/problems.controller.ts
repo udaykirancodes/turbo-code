@@ -4,6 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../errors";
 import { ProblemRepository } from "../repositories";
 import { ProblemService } from "../services";
+import { ProblemType } from "../types/problem.type";
 import ApiResponse from "../utils/api.request";
 
 const problemService = new ProblemService(new ProblemRepository());
@@ -25,7 +26,9 @@ async function getProblems(req: Request, res: Response, next: NextFunction) {
 // Add a Problem
 async function createProblem(req: Request, res: Response, next: NextFunction) {
   try {
-    const problems = await problemService.createProblem(req.body);
+    const problems = await problemService.createProblem(
+      req.body as ProblemType
+    );
     return res
       .status(StatusCodes.CREATED)
       .json(
