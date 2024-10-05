@@ -1,0 +1,8 @@
+# Docker Pull Redis 
+docker pull redis 
+
+# Start the Redis 
+docker run -p 6379:6379 redis          
+
+# access the redis cli 
+docker exec -it bf016e525259 redis-cli
