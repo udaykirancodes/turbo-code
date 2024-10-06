@@ -30,18 +30,6 @@ const startServer = async () => {
   app.listen(serverConfig.PORT, async () => {
     console.log("Server Started @" + serverConfig.PORT);
   });
-  // const res = await cppRunner(
-  //   `
-  //   #include<iostream>
-  //   using namespace std;
-  //   int main(){
-  //     cout<<"Hello World"<<endl;
-  //     return 0;
-  //   }
-  //   `,
-  //   ""
-  // );
-  // console.log(res);
 };
 
 startServer();

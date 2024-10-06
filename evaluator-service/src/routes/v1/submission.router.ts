@@ -5,7 +5,7 @@ import { validate } from "../../validators";
 
 const submissionRouter = Router();
 
-submissionRouter.get(
+submissionRouter.post(
   "/",
   validate(SubmissionZodSchema),
   SubmissionController.addSubmission
