@@ -15,18 +15,16 @@ const ProblemSchema = new mongoose.Schema({
     enum: ["easy", "medium", "hard"],
     default: "easy",
   },
-  testCases: [
-    {
-      input: {
-        type: String,
-        required: true,
-      },
-      output: {
-        type: String,
-        required: true,
-      },
+  testCases: {
+    input: {
+      type: String,
+      required: true,
     },
-  ],
+    output: {
+      type: String,
+      required: true,
+    },
+  },
   codeStubs: [
     {
       language: {

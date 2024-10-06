@@ -7,7 +7,7 @@ const myWorker = new Worker(
   EXECUTION_QUEUE_NAME,
   async (job: Job) => {
     if (job.name === EXECUTION_JOB_NAME) {
-      const executionJob = new ExecutionJob(EXECUTION_JOB_NAME, job.data);
+      const executionJob = new ExecutionJob(job.data);
       executionJob.handle();
     }
   },
