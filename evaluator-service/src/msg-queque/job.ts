@@ -11,7 +11,11 @@ class ExecutionJob {
   }
   handle = async () => {
     if (this.data.language === "CPP") {
-      const res = await cppRunner(this.data.code, this.data.input);
+      const res = await cppRunner(
+        this.data.code,
+        this.data.input,
+        this.data.output || ""
+      );
       console.log(res);
     }
   };

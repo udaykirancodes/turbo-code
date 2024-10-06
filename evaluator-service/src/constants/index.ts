@@ -9,3 +9,8 @@ export const SUPPORTED_IMAGES = {
   NODE_IMAGE: "node:20-alpine",
   CPP_IMAGE: "gcc:latest",
 };
+
+export const ALLOWED_TIME = {
+  CPP: 2 * 1000,
+  NODE: 10 * 1000,
+};

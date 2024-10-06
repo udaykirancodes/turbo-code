@@ -1,6 +1,7 @@
-import { SUPPORTED_IMAGES } from "../../constants";
-import { createContainer, decodeDockerStream } from "../index";
-const cppRunner = async (code: string, input: string) => {
+import { ALLOWED_TIME, SUPPORTED_IMAGES } from "../../constants";
+import { getExecutionResult } from "../helper";
+import { createContainer } from "../index";
+const cppRunner = async (code: string, input: string, output: string) => {
   // create a raw buffer
   const rawBuffer: Buffer[] = [];
   // here comes the executable cmd
@@ -30,20 +31,17 @@ const cppRunner = async (code: string, input: string) => {
   loggerStream.on("error", (err: Error) => {
     console.error("Error while streaming logs:", err);
   });
-
-  // TODO : Implement TLE,MLE,WA,SUBMITTED
-  const response = await new Promise((res) => {
-    // when the log stream ends
-    loggerStream.on("end", async () => {
-      const completeBuffer = Buffer.concat(rawBuffer);
-      // get the actual data from the buffer
-      const decodedStream = decodeDockerStream(completeBuffer);
-      // remove the created container from docker
-      await container.remove();
-      // send the response
-      res(decodedStream);
-    });
-  });
-  return response;
+  try {
+    const res = await getExecutionResult(
+      loggerStream,
+      container,
+      rawBuffer,
+      ALLOWED_TIME.CPP,
+      output
+    );
+    return res;
+  } catch (error) {
+    return error;
+  }
 };
 export default cppRunner;

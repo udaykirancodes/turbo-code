@@ -1,7 +1,9 @@
+import Dockerode from "dockerode";
 import { DOCKER_STREAM_HEADER_SIZE } from "../constants";
+import { ExecutionResultType } from "../types/execution.type";
 import { DockerStreamOutput } from "./types";
 
-export default function decodeDockerStream(buffer: Buffer): DockerStreamOutput {
+export function decodeDockerStream(buffer: Buffer): DockerStreamOutput {
   let offset = 0; // This variable keeps track of the current position in the buffer while parsing
 
   // The output that will store the accumulated stdout and stderr output as strings
@@ -32,3 +34,38 @@ export default function decodeDockerStream(buffer: Buffer): DockerStreamOutput {
 
   return output;
 }
+
+export const getExecutionResult = async (
+  loggerStream: NodeJS.ReadableStream,
+  container: Dockerode.Container,
+  rawBuffer: Buffer[],
+  allowedTime: number,
+  output: string
+): Promise<ExecutionResultType> => {
+  return new Promise((res, rej) => {
+    const timeout = setTimeout(() => {
+      container.kill();
+      rej({ output: "", status: "TLE" });
+    }, allowedTime);
+    // when the log stream ends
+    loggerStream.on("end", async () => {
+      clearTimeout(timeout);
+      const completeBuffer = Buffer.concat(rawBuffer);
+      // get the actual data from the buffer
+      const decodedStream = decodeDockerStream(completeBuffer);
+      // remove the created container from docker
+      await container.remove();
+
+      // send the response
+      if (decodedStream.stderr) {
+        rej({ output: decodedStream.stderr, status: "ERROR" });
+      } else {
+        if (decodedStream.stdout.trim() === output.trim()) {
+          res({ output: decodedStream.stdout.trim(), status: "SUCCESS" });
+        } else {
+          rej({ output: decodedStream.stdout.trim(), status: "WA" });
+        }
+      }
+    });
+  });
+};
