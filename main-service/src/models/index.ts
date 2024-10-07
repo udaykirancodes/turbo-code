@@ -1,3 +1,3 @@
 import Problems from "./problems.model";
-
-export { Problems };
+import Submissions from "./submission.model";
+export { Problems, Submissions };
