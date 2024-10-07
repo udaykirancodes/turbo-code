@@ -11,4 +11,6 @@ submissionRouter.post(
   submissionController.addSubmission
 );
 
+submissionRouter.get("/:id", submissionController.getSubmissionById);
+
 export default submissionRouter;

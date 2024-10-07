@@ -6,6 +6,6 @@ import submissionRouter from "./submission.routes";
 const v1Router = Router();
 
 v1Router.use("/problems", problemRouter);
-v1Router.use("/submit", submissionRouter);
+v1Router.use("/submission", submissionRouter);
 
 export default v1Router;

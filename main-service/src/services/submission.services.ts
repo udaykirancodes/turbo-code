@@ -23,6 +23,10 @@ class SubmissionService {
       return submission;
     }
   }
+  async getSubmissionById(id: string) {
+    const submission = await this.submissionRepository.getSubmissionById(id);
+    return submission;
+  }
 }
 
 export default SubmissionService;

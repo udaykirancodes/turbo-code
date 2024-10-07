@@ -11,9 +11,14 @@ class SubmissionRepository {
       throw error;
     }
   }
-  //   getUserSubmissionsWithProblemId() {
-  // This will fetch the user's submissions for a particular problem
-  //   }
+  async getSubmissionById(id: string) {
+    try {
+      const submission = await Submissions.findById(id);
+      return submission;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default SubmissionRepository;
