@@ -10,6 +10,7 @@ const addSubmission = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.info("Request came");
   const data = req.body as SubmissionBodyRequest;
   await addJobToQueue(EXECUTION_QUEUE_NAME, data);
   res

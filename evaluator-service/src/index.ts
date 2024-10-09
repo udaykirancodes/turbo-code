@@ -6,7 +6,6 @@ import { serverConfig } from "./config";
 import { SUPPORTED_IMAGES } from "./constants";
 import { pullImage } from "./docker";
 import apiRouter from "./routes";
-import logger from "./utils/logger";
 
 const app = express();
 
@@ -18,7 +17,7 @@ app.get("/", (req, res) => {
   res.json({ status: "healthy" });
 });
 
-myWorker.on("error", (err) => logger.error("Error at Queue ", err));
+myWorker.on("error", (err) => console.error("Error at Queue ", err));
 
 // Pull the supported images on starting the server
 const pullAllImages = async () => {
@@ -29,7 +28,7 @@ const pullAllImages = async () => {
 const startServer = async () => {
   await pullAllImages();
   app.listen(serverConfig.PORT, async () => {
-    logger.info("Server Started @" + serverConfig.PORT);
+    console.info("Server Started @" + serverConfig.PORT);
   });
 };
 

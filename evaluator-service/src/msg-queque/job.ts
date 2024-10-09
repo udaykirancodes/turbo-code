@@ -1,6 +1,5 @@
 import cppRunner from "../docker/services/cpp-runner";
 import { SubmissionBodyRequest } from "../types/submission.type";
-import logger from "../utils/logger";
 
 class ExecutionJob {
   data: SubmissionBodyRequest;
@@ -14,7 +13,7 @@ class ExecutionJob {
         this.data.input,
         this.data.output || ""
       );
-      logger.info("Result of CPP : ", { result: res });
+      console.info("Result of CPP : ", res);
     }
   };
   failed = () => {};
