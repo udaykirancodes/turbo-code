@@ -1,4 +1,5 @@
 import { SUPPORTED_IMAGES } from "../../constants";
+import logger from "../../utils/logger";
 import { createContainer, decodeDockerStream } from "../index";
 const nodeRunner = async (code: string) => {
   // create a raw buffer
@@ -21,7 +22,7 @@ const nodeRunner = async (code: string) => {
   });
 
   loggerStream.on("error", (err: Error) => {
-    console.error("Error while streaming logs:", err);
+    logger.error("Error while streaming logs:", { error: err });
   });
 
   const response = await new Promise((res) => {

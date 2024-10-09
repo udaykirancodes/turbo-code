@@ -1,4 +1,5 @@
 import { ALLOWED_TIME, SUPPORTED_IMAGES } from "../../constants";
+import logger from "../../utils/logger";
 import { getExecutionResult } from "../helper";
 import { createContainer } from "../index";
 const cppRunner = async (code: string, input: string, output: string) => {
@@ -29,7 +30,7 @@ const cppRunner = async (code: string, input: string, output: string) => {
   });
 
   loggerStream.on("error", (err: Error) => {
-    console.error("Error while streaming logs:", err);
+    logger.error("Error while streaming logs:", err);
   });
   try {
     const res = await getExecutionResult(
