@@ -5,6 +5,7 @@ import SubmissionRepository from "../repositories/submission.repository";
 import { SubmissionReqBodyType } from "../types/submission.type";
 import { EXECUTION_QUEUE_NAME } from "../utils/constants";
 
+const problemRespository = new ProblemRepository();
 class SubmissionService {
   private submissionRepository: SubmissionRepository;
   constructor(submissionRepository: SubmissionRepository) {
@@ -30,9 +31,14 @@ class SubmissionService {
       data.problemId,
       data.language
     );
+    const question = await problemRespository.getProblem(data.problemId);
+    if (!question) return;
+
     const obj = {
       submissionId,
       code,
+      input: question?.testCases?.input || "",
+      output: question?.testCases?.output || "",
       ...rest,
     };
     await addJobToQueue(EXECUTION_QUEUE_NAME, obj);
