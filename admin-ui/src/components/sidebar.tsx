@@ -1,12 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-  FileText,
-  HelpCircle,
-  Home,
-  LucideIcon,
-  Settings,
-  Users,
-} from "lucide-react";
+import { FileText, Home, LucideIcon } from "lucide-react";
 
 const SidebarItem = ({
   icon: Icon,
@@ -39,10 +32,7 @@ const AdminSidebar = () => {
       <div className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 h-full">
         <ul className="space-y-2">
           <SidebarItem icon={Home} label="Dashboard" isActive={true} />
-          <SidebarItem icon={Users} label="Users" />
           <SidebarItem icon={FileText} label="Problems" />
-          <SidebarItem icon={Settings} label="Settings" />
-          <SidebarItem icon={HelpCircle} label="Help" />
         </ul>
       </div>
     </aside>
