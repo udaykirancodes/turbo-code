@@ -1,11 +1,12 @@
 import AdminLayout from "./components/layout";
-import AdminProblemListPage from "./pages/problems";
+import AddProblemForm from "./pages/add-problem";
 
 const App = () => {
   return (
     <>
       <AdminLayout>
-        <AdminProblemListPage />
+        {/* <AdminProblemListPage /> */}
+        <AddProblemForm />
       </AdminLayout>
     </>
   );

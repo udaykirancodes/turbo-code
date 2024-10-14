@@ -9,7 +9,6 @@ const problems = [
   { id: 2, title: "Reverse Linked List", difficulty: "medium" },
   { id: 3, title: "Binary Tree Inorder Traversal", difficulty: "medium" },
   { id: 4, title: "Merge k Sorted Lists", difficulty: "hard" },
-  // Add more mock problems as needed
 ];
 
 const getDifficultyColor = (difficulty: string) => {
