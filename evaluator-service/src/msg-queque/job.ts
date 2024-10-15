@@ -1,9 +1,9 @@
 import cppRunner from "../docker/services/cpp-runner";
-import { SubmissionBodyRequest } from "../types/submission.type";
+import { SubmissionType } from "../types/submission.type";
 
 class ExecutionJob {
-  data: SubmissionBodyRequest;
-  constructor(data: SubmissionBodyRequest) {
+  data: SubmissionType;
+  constructor(data: SubmissionType) {
     this.data = data;
   }
   handle = async () => {
