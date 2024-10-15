@@ -1,6 +1,8 @@
 import SubmissionRepository from "../repositories/submission.repository";
 import SubmissionService from "../services/submission.services";
 import { SubmissionQueueDataType } from "../types/submission.type";
+import { NOTIFY_JOB, NOTIFY_QUEUE } from "../utils/constants";
+import addJobToQueue from "./add-job";
 
 const submissionService = new SubmissionService(new SubmissionRepository());
 
@@ -13,7 +15,7 @@ class EvaluatedJob {
     if (this.data.type === "SUBMIT") {
       await submissionService.updateByIdField(this.data.id, this.data);
     }
-    // Todo Update it to socket io server to send events to the user
+    await addJobToQueue(NOTIFY_QUEUE, this.data, NOTIFY_JOB);
   };
   failed = () => {};
 }
