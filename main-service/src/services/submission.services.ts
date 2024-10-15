@@ -13,25 +13,33 @@ class SubmissionService {
   constructor(submissionRepository: SubmissionRepository) {
     this.submissionRepository = submissionRepository;
   }
-  private async getCode(userCode: string, problemId: string, language: string) {
-    const problemResp = new ProblemRepository();
-    const { codeStubs } = await problemResp.getProblem(problemId);
-    const stub = codeStubs.find((c) => c.language === language);
+  private async getCodeAndTestCases(
+    userCode: string,
+    problemId: string,
+    language: string
+  ) {
+    const problem = await problemRespository.getProblem(problemId);
+    const stub = problem.codeStubs.find((c) => c.language === language);
     if (stub) {
-      return `${stub.startSnippet}
+      return {
+        code: `${stub.startSnippet}
               ${userCode}
-              ${stub.endSnippet}`;
+              ${stub.endSnippet}`,
+        testCases: problem.testCases,
+      };
     }
-    return userCode;
+    return { code: userCode, testCases: { input: "", output: "" } };
   }
   private async addSubmissionToQueue(data: SubmissionQueueDataType) {
     console.log("Adding Submission to Queue : WIP");
-    const code: string = await this.getCode(
+    const { code, testCases } = await this.getCodeAndTestCases(
       data.code,
       data.problemId,
       data.language
     );
     data.code = code;
+    data.input = testCases?.input || "";
+    data.output = testCases?.output || "";
     await addJobToQueue(EXECUTION_QUEUE_NAME, data);
   }
   async createSubmission(data: SubmissionReqBodyType) {
@@ -41,6 +49,8 @@ class SubmissionService {
       code: userSnippet,
       status: "PENDING",
       ...rest,
+      input: "",
+      output: "",
     };
     if (data.type === "RUN") {
       // no need to store in the db

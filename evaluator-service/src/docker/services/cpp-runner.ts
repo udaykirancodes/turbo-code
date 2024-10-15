@@ -1,7 +1,12 @@
 import { ALLOWED_TIME, SUPPORTED_IMAGES } from "../../constants";
+import { ExecutionResultType } from "../../types/execution.type";
 import { getExecutionResult } from "../helper";
 import { createContainer } from "../index";
-const cppRunner = async (code: string, input: string, output: string) => {
+const cppRunner = async (
+  code: string,
+  input: string,
+  output: string
+): Promise<ExecutionResultType> => {
   // create a raw buffer
   const rawBuffer: Buffer[] = [];
   // here comes the executable cmd
@@ -41,7 +46,7 @@ const cppRunner = async (code: string, input: string, output: string) => {
     );
     return res;
   } catch (error) {
-    return error;
+    throw new Error();
   }
 };
 export default cppRunner;

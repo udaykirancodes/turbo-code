@@ -13,7 +13,9 @@ class ExecutionJob {
         this.data.input,
         this.data.output || ""
       );
-      console.info("Result of CPP : ", res);
+      this.data.output = res.output;
+      this.data.status = res.status;
+      console.log("Here : ", this.data);
     }
   };
   failed = () => {};

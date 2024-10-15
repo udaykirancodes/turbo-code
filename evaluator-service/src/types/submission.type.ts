@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+const statusZodSchema = z
+  .enum(["PENDING", "WA", "TLE", "MLE", "SUCCESS"])
+  .default("PENDING");
+
 export const SubmissionZodSchema = z.object({
   type: z.enum(["RUN", "SUBMIT"]),
   problemId: z.string().min(1, "problem id is required"),
@@ -8,7 +12,8 @@ export const SubmissionZodSchema = z.object({
   input: z.string(),
   output: z.string().default(""),
   userId: z.string().min(1, "user id is required"),
-  status: z.enum(["PENDING", "WA", "TLE", "MLE", "SUCCESS"]).default("PENDING"),
+  status: statusZodSchema,
 });
 
 export type SubmissionType = z.infer<typeof SubmissionZodSchema>;
+export type StatusType = z.infer<typeof statusZodSchema>;

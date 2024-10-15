@@ -5,13 +5,10 @@ import myWorker from "./msg-queque/worker";
 import { serverConfig } from "./config";
 import { SUPPORTED_IMAGES } from "./constants";
 import { pullImage } from "./docker";
-import apiRouter from "./routes";
 
 const app = express();
 
 app.use(express.json());
-
-app.use("/api", apiRouter);
 
 app.get("/", (req, res) => {
   res.json({ status: "healthy" });
