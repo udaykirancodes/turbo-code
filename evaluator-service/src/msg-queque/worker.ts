@@ -1,12 +1,12 @@
 import { Job, Worker } from "bullmq";
 import redisConnection from "../config/redis.config";
-import { EXECUTION_JOB_NAME, EXECUTION_QUEUE_NAME } from "../constants";
+import { SUBMISSION_JOB, SUBMISSION_QUEUE } from "../constants";
 import ExecutionJob from "./job";
 
 const myWorker = new Worker(
-  EXECUTION_QUEUE_NAME,
+  SUBMISSION_QUEUE,
   async (job: Job) => {
-    if (job.name === EXECUTION_JOB_NAME) {
+    if (job.name === SUBMISSION_JOB) {
       const executionJob = new ExecutionJob(job.data);
       executionJob.handle();
     }

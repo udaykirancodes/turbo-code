@@ -1,12 +1,12 @@
 import { Job, Worker } from "bullmq";
 import redisConnection from "../config/redis.config";
-import { COMPLETED_JOB_NAME, COMPLETED_QUEUE_NAME } from "../utils/constants";
+import { EVALUATION_JOB, EVALUATION_QUEUE } from "../utils/constants";
 import EvaluatedJob from "./job";
 
 const myWorker = new Worker(
-  COMPLETED_QUEUE_NAME,
+  EVALUATION_QUEUE,
   async (job: Job) => {
-    if (job.name === COMPLETED_JOB_NAME) {
+    if (job.name === EVALUATION_JOB) {
       const evaluatedJob = new EvaluatedJob(job.data);
       evaluatedJob.handle();
     }

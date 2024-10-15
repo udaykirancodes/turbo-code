@@ -1,9 +1,10 @@
 // Message Queue : bullmq
-export const SAMPLE_JOB_NAME = "sample-job";
-export const EXECUTION_QUEUE_NAME = "execution-queue";
-export const EXECUTION_JOB_NAME = "execution-job";
-export const COMPLETED_QUEUE_NAME = "evaluation-completed-queue";
-export const COMPLETED_JOB_NAME = "evaluation-completed-job";
+export const SUBMISSION_QUEUE = "SubmissionQueue";
+export const SUBMISSION_JOB = "Submission";
+
+export const EVALUATION_QUEUE = "EvaluationQueue";
+export const EVALUATION_JOB = "Evaluation";
+
 // Docker : dockerode
 export const DOCKER_STREAM_HEADER_SIZE = 8;
 

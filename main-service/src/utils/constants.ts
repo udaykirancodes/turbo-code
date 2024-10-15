@@ -1,5 +1,5 @@
-export const EXECUTION_QUEUE_NAME = "execution-queue";
-export const EXECUTION_JOB_NAME = "execution-job";
+export const SUBMISSION_QUEUE = "SubmissionQueue";
+export const SUBMISSION_JOB = "Submission";
 
-export const COMPLETED_QUEUE_NAME = "evaluation-completed-queue";
-export const COMPLETED_JOB_NAME = "evaluation-completed-job";
+export const EVALUATION_QUEUE = "EvaluationQueue";
+export const EVALUATION_JOB = "Evaluation";

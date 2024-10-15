@@ -5,7 +5,7 @@ import {
   SubmissionQueueDataType,
   SubmissionReqBodyType,
 } from "../types/submission.type";
-import { EXECUTION_QUEUE_NAME } from "../utils/constants";
+import { SUBMISSION_JOB, SUBMISSION_QUEUE } from "../utils/constants";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -42,7 +42,7 @@ class SubmissionService {
     data.code = code;
     data.input = testCases?.input || "";
     data.output = testCases?.output || "";
-    await addJobToQueue(EXECUTION_QUEUE_NAME, data);
+    await addJobToQueue(SUBMISSION_QUEUE, data, SUBMISSION_JOB);
   }
   async createSubmission(data: SubmissionReqBodyType) {
     const { userSnippet, ...rest } = data;
