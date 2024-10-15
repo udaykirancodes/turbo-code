@@ -1,5 +1,7 @@
+import { COMPLETED_JOB_NAME, COMPLETED_QUEUE_NAME } from "../constants";
 import cppRunner from "../docker/services/cpp-runner";
 import { SubmissionType } from "../types/submission.type";
+import addJobToQueue from "./add-job";
 
 class ExecutionJob {
   data: SubmissionType;
@@ -15,7 +17,8 @@ class ExecutionJob {
       );
       this.data.output = res.output;
       this.data.status = res.status;
-      console.log("Here : ", this.data);
+      // Add this submission to anther Queue
+      await addJobToQueue(COMPLETED_QUEUE_NAME, this.data, COMPLETED_JOB_NAME);
     }
   };
   failed = () => {};

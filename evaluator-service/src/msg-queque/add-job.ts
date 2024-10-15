@@ -1,9 +1,12 @@
-import { EXECUTION_JOB_NAME } from "../constants";
 import { SubmissionType } from "../types/submission.type";
 import createQueue from "./create-queue";
-const addJobToQueue = async (queueName: string, payload: SubmissionType) => {
+const addJobToQueue = async (
+  queueName: string,
+  payload: SubmissionType,
+  jobName: string
+) => {
   const queue = createQueue(queueName);
-  await queue.add(EXECUTION_JOB_NAME, payload);
+  await queue.add(jobName, payload);
 };
 
 export default addJobToQueue;
