@@ -58,12 +58,12 @@ export const getExecutionResult = async (
 
       // send the response
       if (decodedStream.stderr) {
-        rej({ output: decodedStream.stderr, status: "ERROR" });
+        res({ output: decodedStream.stderr, status: "ERROR" });
       } else {
         if (decodedStream.stdout.trim() === output.trim()) {
           res({ output: decodedStream.stdout.trim(), status: "SUCCESS" });
         } else {
-          rej({ output: decodedStream.stdout.trim(), status: "WA" });
+          res({ output: decodedStream.stdout.trim(), status: "WA" });
         }
       }
     });

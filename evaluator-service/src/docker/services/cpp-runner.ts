@@ -36,17 +36,13 @@ const cppRunner = async (
   loggerStream.on("error", (err: Error) => {
     console.error("Error while streaming logs:", err);
   });
-  try {
-    const res = await getExecutionResult(
-      loggerStream,
-      container,
-      rawBuffer,
-      ALLOWED_TIME.CPP,
-      output
-    );
-    return res;
-  } catch (error) {
-    throw new Error();
-  }
+  const res = await getExecutionResult(
+    loggerStream,
+    container,
+    rawBuffer,
+    ALLOWED_TIME.CPP,
+    output
+  );
+  return res;
 };
 export default cppRunner;

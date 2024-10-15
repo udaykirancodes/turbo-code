@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const statusZodSchema = z
-  .enum(["PENDING", "WA", "TLE", "MLE", "SUCCESS"])
+  .enum(["PENDING", "WA", "TLE", "MLE", "SUCCESS", "ERROR"])
   .default("PENDING");
 
 export const SubmissionZodSchema = z.object({
