@@ -11,6 +11,7 @@ const SubmissionQueueData = z.object({
   type: z.enum(["RUN", "SUBMIT"]),
   input: z.string(),
   output: z.string(),
+  id: z.string().uuid(),
   problemId: z.string().min(1, "problem id is required"),
   userId: z.string().min(1, "user id is required"),
   code: z.string().min(1, "user snippet is required"), // Changed from 'code' to 'userSnippet'

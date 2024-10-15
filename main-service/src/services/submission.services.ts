@@ -7,6 +7,8 @@ import {
 } from "../types/submission.type";
 import { EXECUTION_QUEUE_NAME } from "../utils/constants";
 
+import { v4 as uuidv4 } from "uuid";
+
 const problemRespository = new ProblemRepository();
 class SubmissionService {
   private submissionRepository: SubmissionRepository;
@@ -48,6 +50,7 @@ class SubmissionService {
     const object: SubmissionQueueDataType = {
       code: userSnippet,
       status: "PENDING",
+      id: uuidv4(),
       ...rest,
       input: "",
       output: "",
@@ -58,7 +61,10 @@ class SubmissionService {
       return {};
     } else {
       // store in the db
-      const submission = await this.submissionRepository.addSubmission(data);
+      const submission = await this.submissionRepository.addSubmission({
+        id: object.id,
+        ...data,
+      });
       this.addSubmissionToQueue(object);
       return submission;
     }

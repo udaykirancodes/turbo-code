@@ -3,7 +3,7 @@ import { SubmissionReqBodyType } from "../types/submission.type";
 
 class SubmissionRepository {
   // Adds the Submission
-  async addSubmission(data: SubmissionReqBodyType) {
+  async addSubmission(data: SubmissionReqBodyType & { id: string }) {
     try {
       const submission = await Submissions.create(data);
       return submission;

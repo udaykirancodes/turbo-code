@@ -13,6 +13,7 @@ export const SubmissionZodSchema = z.object({
   output: z.string().default(""),
   userId: z.string().min(1, "user id is required"),
   status: statusZodSchema,
+  id: z.string().uuid(),
 });
 
 export type SubmissionType = z.infer<typeof SubmissionZodSchema>;

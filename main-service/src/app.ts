@@ -1,6 +1,7 @@
 import express from "express";
 import { rateLimit } from "express-rate-limit";
 
+import myWorker from "./msg-queue/worker";
 import apiRoutes from "./routes";
 import errorHandler from "./utils/error.handler";
 import requestLogger from "./utils/request-logger";
@@ -14,6 +15,8 @@ const limiter = rateLimit({
 });
 
 const app = express();
+
+myWorker.on("error", (err) => console.error("Error at Queue ", err));
 
 // middlewares
 app.use(express.json());

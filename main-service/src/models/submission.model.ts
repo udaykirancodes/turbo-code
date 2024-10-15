@@ -18,6 +18,11 @@ const SubmissionSchema = new mongoose.Schema({
     enum: ["CPP", "PYTHON"],
     required: true,
   },
+  id: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   status: {
     type: String,
     enum: ["PENDING", "WA", "TLE", "MLE", "SUCCESS"],
