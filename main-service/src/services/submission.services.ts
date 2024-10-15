@@ -33,7 +33,7 @@ class SubmissionService {
     return { code: userCode, testCases: { input: "", output: "" } };
   }
   private async addSubmissionToQueue(data: SubmissionQueueDataType) {
-    console.log("Adding Submission to Queue : WIP");
+    console.log("Adding Submission to Queue");
     const { code, testCases } = await this.getCodeAndTestCases(
       data.code,
       data.problemId,
@@ -71,6 +71,18 @@ class SubmissionService {
   }
   async getSubmissionById(id: string) {
     const submission = await this.submissionRepository.getSubmissionById(id);
+    return submission;
+  }
+  async updateByIdField(id: string, data: SubmissionQueueDataType) {
+    const { code, ...rest } = data;
+    const obj = {
+      userSnippet: code,
+      ...rest,
+    };
+    const submission = await this.submissionRepository.findByIdAndUpdate(
+      data.id,
+      obj
+    );
     return submission;
   }
 }

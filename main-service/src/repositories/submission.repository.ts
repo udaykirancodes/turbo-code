@@ -1,11 +1,27 @@
+import { NotFoundError } from "../errors";
 import { Submissions } from "../models";
-import { SubmissionReqBodyType } from "../types/submission.type";
+import { SubmissionModelType } from "../types/submission.type";
 
 class SubmissionRepository {
   // Adds the Submission
-  async addSubmission(data: SubmissionReqBodyType & { id: string }) {
+  async addSubmission(data: SubmissionModelType) {
     try {
       const submission = await Submissions.create(data);
+      return submission;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // Find By id & Update
+  async findByIdAndUpdate(id: string, data: SubmissionModelType) {
+    try {
+      const submission = await Submissions.findOneAndUpdate(
+        { id: id },
+        { ...data }
+      );
+      if (!submission) {
+        throw new NotFoundError("Submission not found", {});
+      }
       return submission;
     } catch (error) {
       throw error;

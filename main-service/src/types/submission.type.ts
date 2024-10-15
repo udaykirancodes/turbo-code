@@ -21,8 +21,9 @@ const SubmissionQueueData = z.object({
 
 type SubmissionReqBodyType = z.infer<typeof SubmissionReqBodySchema>;
 type SubmissionQueueDataType = z.infer<typeof SubmissionQueueData>;
-
+type SubmissionModelType = SubmissionReqBodyType & { id: string };
 export {
+  SubmissionModelType,
   SubmissionQueueDataType,
   SubmissionReqBodySchema,
   SubmissionReqBodyType,

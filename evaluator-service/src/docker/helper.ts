@@ -45,7 +45,7 @@ export const getExecutionResult = async (
   return new Promise((res, rej) => {
     const timeout = setTimeout(() => {
       container.kill();
-      rej({ output: "", status: "TLE" });
+      res({ output: "", status: "TLE" });
     }, allowedTime);
     // when the log stream ends
     loggerStream.on("end", async () => {
