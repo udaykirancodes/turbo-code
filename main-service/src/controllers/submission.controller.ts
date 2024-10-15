@@ -37,7 +37,7 @@ async function getSubmissionById(
     const id = req.params.id || "";
     const submission = await submissionService.getSubmissionById(id);
     if (!submission) {
-      return new NotFoundError("submission not found", {});
+      throw new NotFoundError("submission not found", {});
     }
     return res
       .status(StatusCodes.OK)

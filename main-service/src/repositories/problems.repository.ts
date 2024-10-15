@@ -9,7 +9,7 @@ class ProblemRepository {
     try {
       const problems = await Problems.find();
       if (!problems) {
-        return new NotFoundError("Cannot Find Problems", {});
+        throw new NotFoundError("Cannot Find Problems", {});
       }
       return problems;
     } catch (error) {

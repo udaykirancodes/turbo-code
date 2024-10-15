@@ -14,7 +14,7 @@ async function getProblems(req: Request, res: Response, next: NextFunction) {
   try {
     const problems = await problemService.getProblems();
     if (!problems) {
-      return new NotFoundError("Problems Not Found", {});
+      throw new NotFoundError("Problems Not Found", {});
     }
     return res
       .status(StatusCodes.OK)
