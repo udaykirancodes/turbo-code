@@ -5,23 +5,22 @@ const SubmissionReqBodySchema = z.object({
   userId: z.string().min(1, "user id is required"),
   userSnippet: z.string().min(1, "code is required"),
   language: z.enum(["CPP", "PYTHON"]),
-  status: z.enum(["PENDING", "WA", "TLE", "MLE", "SUCCESS"]).default("PENDING"),
 });
 
-const SubmissionSchema = z.object({
+const SubmissionQueueData = z.object({
+  type: z.enum(["RUN", "SUBMIT"]),
   problemId: z.string().min(1, "problem id is required"),
   userId: z.string().min(1, "user id is required"),
-  userSnippet: z.string().min(1, "code is required"),
+  code: z.string().min(1, "user snippet is required"), // Changed from 'code' to 'userSnippet'
   language: z.enum(["CPP", "PYTHON"]),
   status: z.enum(["PENDING", "WA", "TLE", "MLE", "SUCCESS"]).default("PENDING"),
 });
 
 type SubmissionReqBodyType = z.infer<typeof SubmissionReqBodySchema>;
-type SubmissionSchemaType = z.infer<typeof SubmissionSchema>;
+type SubmissionQueueDataType = z.infer<typeof SubmissionQueueData>;
 
 export {
+  SubmissionQueueDataType,
   SubmissionReqBodySchema,
   SubmissionReqBodyType,
-  SubmissionSchema,
-  SubmissionSchemaType,
 };

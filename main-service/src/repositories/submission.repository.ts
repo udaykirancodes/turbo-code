@@ -1,9 +1,9 @@
 import { Submissions } from "../models";
-import { SubmissionSchemaType } from "../types/submission.type";
+import { SubmissionReqBodyType } from "../types/submission.type";
 
 class SubmissionRepository {
   // Adds the Submission
-  async addSubmission(data: SubmissionSchemaType) {
+  async addSubmission(data: SubmissionReqBodyType) {
     try {
       const submission = await Submissions.create(data);
       return submission;

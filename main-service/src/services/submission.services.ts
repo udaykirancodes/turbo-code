@@ -1,8 +1,10 @@
-import { v4 as uuidv4 } from "uuid";
 import addJobToQueue from "../msg-queue/add-job";
 import { ProblemRepository } from "../repositories";
 import SubmissionRepository from "../repositories/submission.repository";
-import { SubmissionReqBodyType } from "../types/submission.type";
+import {
+  SubmissionQueueDataType,
+  SubmissionReqBodyType,
+} from "../types/submission.type";
 import { EXECUTION_QUEUE_NAME } from "../utils/constants";
 
 const problemRespository = new ProblemRepository();
@@ -20,40 +22,34 @@ class SubmissionService {
               ${userCode}
               ${stub.endSnippet}`;
     }
-    return "";
+    return userCode;
   }
-  private async addSubmissionToQueue(data: SubmissionReqBodyType) {
+  private async addSubmissionToQueue(data: SubmissionQueueDataType) {
     console.log("Adding Submission to Queue : WIP");
-    const submissionId = uuidv4();
-    const { userSnippet, ...rest } = data;
     const code: string = await this.getCode(
-      data.userSnippet,
+      data.code,
       data.problemId,
       data.language
     );
-    const question = await problemRespository.getProblem(data.problemId);
-    if (!question) return;
-
-    const obj = {
-      submissionId,
-      code,
-      input: question?.testCases?.input || "",
-      output: question?.testCases?.output || "",
-      ...rest,
-    };
-    await addJobToQueue(EXECUTION_QUEUE_NAME, obj);
-    // TODO : get the problem related input output cases & codeStubs and add to the queue
+    data.code = code;
+    await addJobToQueue(EXECUTION_QUEUE_NAME, data);
   }
   async createSubmission(data: SubmissionReqBodyType) {
+    const { userSnippet, ...rest } = data;
+
+    const object: SubmissionQueueDataType = {
+      code: userSnippet,
+      status: "PENDING",
+      ...rest,
+    };
     if (data.type === "RUN") {
       // no need to store in the db
-      this.addSubmissionToQueue(data);
+      this.addSubmissionToQueue(object);
       return {};
     } else {
       // store in the db
-      const { type, ...others } = data;
-      const submission = await this.submissionRepository.addSubmission(others);
-      this.addSubmissionToQueue(data);
+      const submission = await this.submissionRepository.addSubmission(data);
+      this.addSubmissionToQueue(object);
       return submission;
     }
   }
