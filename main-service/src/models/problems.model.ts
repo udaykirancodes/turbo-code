@@ -1,52 +1,55 @@
 import mongoose from "mongoose";
 
-const ProblemSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    unique: true,
-    required: [true, "Title is required"],
-  },
-  description: {
-    type: String,
-    requried: [true, "Description is required"],
-  },
-  difficulty: {
-    type: String,
-    enum: ["easy", "medium", "hard"],
-    default: "easy",
-  },
-  testCases: {
-    input: {
+const ProblemSchema = new mongoose.Schema(
+  {
+    title: {
       type: String,
-      required: true,
+      unique: true,
+      required: [true, "Title is required"],
     },
-    output: {
+    description: {
       type: String,
-      required: true,
+      requried: [true, "Description is required"],
     },
-  },
-  codeStubs: [
-    {
-      language: {
+    difficulty: {
+      type: String,
+      enum: ["easy", "medium", "hard"],
+      default: "easy",
+    },
+    testCases: {
+      input: {
         type: String,
-        enum: ["CPP", "PYTHON"],
         required: true,
       },
-      startSnippet: {
+      output: {
         type: String,
-      },
-      endSnippet: {
-        type: String,
-      },
-      userSnippet: {
-        type: String,
+        required: true,
       },
     },
-  ],
-  editorial: {
-    type: String,
+    codeStubs: [
+      {
+        language: {
+          type: String,
+          enum: ["CPP", "PYTHON"],
+          required: true,
+        },
+        startSnippet: {
+          type: String,
+        },
+        endSnippet: {
+          type: String,
+        },
+        userSnippet: {
+          type: String,
+        },
+      },
+    ],
+    editorial: {
+      type: String,
+    },
   },
-});
+  { timestamps: true }
+);
 
 const Problems = mongoose.model("problems", ProblemSchema);
 
