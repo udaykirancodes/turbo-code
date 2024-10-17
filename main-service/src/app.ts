@@ -6,6 +6,8 @@ import apiRoutes from "./routes";
 import errorHandler from "./utils/error.handler";
 import requestLogger from "./utils/request-logger";
 
+import cors from "cors";
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
@@ -15,6 +17,8 @@ const limiter = rateLimit({
 });
 
 const app = express();
+
+app.use(cors());
 
 myWorker.on("error", (err) => console.error("Error at Queue ", err));
 

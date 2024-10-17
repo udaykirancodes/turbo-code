@@ -25,11 +25,15 @@ import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
 
+import { ADD_PROBLEM_URL } from "@/url";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const problemSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(1, "Description is required"),
   difficulty: z.enum(["easy", "medium", "hard"]),
-  testCase: z.object({
+  testCases: z.object({
     input: z.string().min(1, "Input is required"),
     output: z.string().min(1, "Output is required"),
   }),
@@ -57,7 +61,7 @@ const AddProblemForm = () => {
       title: "",
       description: "",
       difficulty: "easy",
-      testCase: { input: "", output: "" },
+      testCases: { input: "", output: "" },
       codeStubs: [
         { language: "CPP", startSnippet: "", userSnippet: "", endSnippet: "" },
       ],
@@ -74,8 +78,19 @@ const AddProblemForm = () => {
     name: "codeStubs",
   });
 
-  const onSubmit = (data: ProblemFormValues) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit = async (problemData: ProblemFormValues) => {
+    try {
+      console.log(problemData);
+      return;
+      const { data } = await axios.post(ADD_PROBLEM_URL, problemData);
+      if (data.success) {
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
