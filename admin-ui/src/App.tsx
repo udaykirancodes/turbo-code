@@ -3,6 +3,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import AdminLayout from "./components/layout";
 import AddProblemForm from "./pages/add-problem";
+import AdminProblemListPage from "./pages/problems";
 const App = () => {
   return (
     <>
@@ -10,6 +11,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<AdminLayout />}>
             <Route path="add-problem" element={<AddProblemForm />} />
+            <Route path="" index element={<AdminProblemListPage />} />
           </Route>
         </Routes>
       </React.Suspense>

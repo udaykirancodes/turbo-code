@@ -83,7 +83,6 @@ const AddProblemForm = () => {
   const onSubmit = async (problemData: ProblemFormValues) => {
     try {
       console.log(problemData);
-      return;
       const { data } = await axios.post(ADD_PROBLEM_URL, problemData);
       if (data.success) {
         navigate("/");
@@ -172,7 +171,7 @@ const AddProblemForm = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
-                    name="testCase.input"
+                    name="testCases.input"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Input</FormLabel>
@@ -188,7 +187,7 @@ const AddProblemForm = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="testCase.output"
+                    name="testCases.output"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Output</FormLabel>
