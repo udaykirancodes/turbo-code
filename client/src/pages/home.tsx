@@ -1,5 +1,6 @@
 import { AppSidebar } from "@/components/common/app-sidebar";
 import { NavActions } from "@/components/common/nav-actions";
+import PlayGround from "@/components/home/playground";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -36,10 +37,10 @@ export default function Home() {
             <NavActions />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 px-4">
+        <div className="flex flex-1 flex-col">
           {/* <div className="mx-auto h-24 w-full max-w-3xl rounded-xl bg-muted/50" />
           <div className="mx-auto h-full w-full max-w-3xl rounded-xl bg-muted/50" /> */}
-          Hello world
+          <PlayGround />
         </div>
       </SidebarInset>
     </SidebarProvider>
