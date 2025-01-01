@@ -2,6 +2,7 @@ import { Editor } from "@monaco-editor/react";
 import type { editor } from "monaco-editor";
 import { useEffect, useRef } from "react";
 import { useSidebar } from "../ui/sidebar";
+import Testcases from "./test-cases";
 
 export default function PlayGround() {
   const { state } = useSidebar();
@@ -31,6 +32,7 @@ export default function PlayGround() {
           minimap: { enabled: false },
         }}
       />
+      <Testcases />
     </div>
   );
 }
