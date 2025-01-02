@@ -10,7 +10,11 @@ import ApiResponse from "../utils/api.request";
 const problemService = new ProblemService(new ProblemRepository());
 
 // Get All Problems
-async function getProblems(req: Request, res: Response, next: NextFunction) {
+async function getProblems(
+  req: Request<{}, {}, {}>, // {req.params} , {} , {req.body}
+  res: Response,
+  next: NextFunction
+) {
   try {
     const problems = await problemService.getProblems();
     if (!problems) {

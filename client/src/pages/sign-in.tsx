@@ -1,6 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/aceternity/input";
 import { Label } from "@/components/ui/aceternity/label";
+import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { IconBrandGoogle } from "@tabler/icons-react";
 import React from "react";
@@ -12,7 +13,7 @@ export function SignInFormPage() {
   };
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+      <Card className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
           Welcome to TURBOCODE-IDE
         </h2>
@@ -53,7 +54,7 @@ export function SignInFormPage() {
             </button>
           </div>
         </form>
-      </div>
+      </Card>
     </div>
   );
 }
