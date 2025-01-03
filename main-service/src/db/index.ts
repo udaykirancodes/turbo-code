@@ -4,7 +4,7 @@ import { Pool } from "pg";
 
 import * as schema from "./schema";
 
-const pool = new Pool({
+export const pool = new Pool({
   connectionString: process.env.DB_URL,
 });
 export const db = drizzle({ client: pool, schema });

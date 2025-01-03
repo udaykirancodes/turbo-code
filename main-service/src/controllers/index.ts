@@ -1,3 +1,4 @@
 import problemsController from "./problems.controller";
 import submissionController from "./submission.controller";
-export { problemsController, submissionController };
+import userController from "./user.controller";
+export { problemsController, submissionController, userController };

@@ -1,11 +1,9 @@
 import { Router } from "express";
 
-import problemRouter from "./problems.routes";
-import submissionRouter from "./submission.routes";
+import userRouter from "./user.routes";
 
 const v1Router = Router();
 
-v1Router.use("/problems", problemRouter);
-v1Router.use("/submission", submissionRouter);
+v1Router.use("/user", userRouter);
 
 export default v1Router;
