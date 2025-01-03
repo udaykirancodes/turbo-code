@@ -1,10 +1,6 @@
+import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+import { usersTable } from "../db/schema/user.schema";
 
-const UserSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "password is required"),
-});
-
-type UserType = z.infer<typeof UserSchema>;
-
-export { UserSchema, UserType };
+export const createUserSchema = createInsertSchema(usersTable);
+export type CreateUserType = z.infer<typeof createUserSchema>;

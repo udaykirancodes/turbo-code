@@ -1,27 +1,25 @@
-import bcryptjs from "bcryptjs";
-import { FilterQuery } from "mongoose";
-import { BadRequestError } from "../errors";
-import User from "../models/user.model";
-import { UserType } from "../types/user.type";
+import { db } from "../db";
+import { users } from "../db/schema";
+import { CreateUserType } from "../types/user.type";
 
 class UserRepository {
-  async register(data: UserType) {
-    const userExists = await User.findOne({ email: data.email });
-    if (userExists) {
-      throw new BadRequestError("email already taken", {});
-    }
-    // User Password Hash
-    const { email, password } = data;
-    const salt = await bcryptjs.genSalt(10);
-    const hashedPassword = await bcryptjs.hash(password, salt);
-    const user = await User.create({
-      email,
-      password: hashedPassword,
-    });
-    return user;
+  // Create User
+  async createUser(user: CreateUserType): CreateUserType {
+    const newUser = await db.insert(users).values(user).returning();
+    return newUser;
   }
-  async findOne(obj: FilterQuery<typeof User>) {
-    const user = await User.findOne(obj);
+  // Find User By ID
+  async findById(id: number) {
+    try {
+      const user = await db.query.users.findFirst({ with: { id: id } });
+      return user;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // Find User By Email
+  async findByEmail(email: string) {
+    const user = await db.query.users.findFirst({ with: { email: email } });
     return user;
   }
 }

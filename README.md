@@ -1,3 +1,6 @@
+![TURBO-CODE-IDE](./turbocode-ide.png)
+Architecture Diagram for TURBO-CODE-IDE
+
 ## TODO List
 
 - List of Files Page in UI and click a value to filter the view.

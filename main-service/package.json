@@ -7,7 +7,8 @@
     "start": "npx tsc -b && node ./dist/index.js",
     "dev": "ts-node src/index.ts",
     "db:generate": "npx drizzle-kit generate",
-    "db:migrate": "npx drizzle-kit migrate"
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:push": "npx drizzle-kit push"
   },
   "keywords": [],
   "author": "",
