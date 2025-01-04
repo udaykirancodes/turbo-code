@@ -12,7 +12,7 @@ function errorHandler(
   if (err instanceof ApiError) {
     return res
       .status(err.statusCode)
-      .json(new ApiResponse(err.statusCode, err.message, err.error));
+      .json(new ApiResponse(err.statusCode, err.message, {}));
   }
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
