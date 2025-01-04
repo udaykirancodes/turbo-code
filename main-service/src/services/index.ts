@@ -1,3 +1,3 @@
-import ProblemService from "./problems.services";
+import UserService from "./user.services";
 
-export { ProblemService };
+export { UserService };

@@ -15,7 +15,7 @@ async function createUser(
   res: Response,
   next: NextFunction
 ) {
-  logger.info("Inside user controller");
+  logger.info("user-controller : create user");
   try {
     const token = await userService.createUser(req.body);
     console.log("token ; ", token);
@@ -32,6 +32,25 @@ async function createUser(
   }
 }
 
+async function loginUser(req: Request, res: Response, next: NextFunction) {
+  logger.info("user-controller : login user");
+  try {
+    const token = await userService.loginUser(req.body);
+    console.log("token ; ", token);
+    if (!token) {
+      throw new BadRequestError("Unable to create a user", {});
+    }
+    return res.status(StatusCodes.OK).json(
+      new ApiResponse(StatusCodes.OK, "Created Successfully", {
+        token: token,
+      })
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   createUser,
+  loginUser,
 };

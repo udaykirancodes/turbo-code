@@ -1,3 +1,3 @@
-import ProblemRepository from "./problems.repository";
+import UserRepository from "./user.repository";
 
-export { ProblemRepository };
+export { UserRepository };

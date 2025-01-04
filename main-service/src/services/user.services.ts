@@ -1,6 +1,10 @@
-import { BadRequestError, InternalServerError } from "../errors";
+import { BadRequestError, InternalServerError, NotFoundError } from "../errors";
 import UserRepository from "../repositories/user.repository";
-import { CreateUserType } from "../types/user.type";
+import {
+  CreateUserType,
+  LoginUserRequestType,
+  SelectUserSchema,
+} from "../types/user.type";
 
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
@@ -15,19 +19,14 @@ class UserSerivice {
   }
   // Create a User
   async createUser(userData: CreateUserType): Promise<string> {
-    logger.info("Inside user service");
+    logger.info("user-service");
     // Check if user exists
-    let user = await this.userRepo.findByEmail(userData.email);
+    let user = await this.#getUserByEmail(userData.email);
     if (user) {
       throw new BadRequestError("user already exists", {});
     }
-    logger.info("user not found");
-    // create salt
-    const salt = await bcrypt.genSalt(10);
-    // hash the password
-    const hashedPassword = await bcrypt.hash(userData.password, salt);
+    const hashedPassword = await this.#getHashedPassword(userData.password);
 
-    logger.info("user not found");
     // prepare the user
     const userDetails: CreateUserType = {
       email: userData.email,
@@ -35,18 +34,41 @@ class UserSerivice {
       password: hashedPassword,
     };
 
-    logger.info("user creating");
     // insert into the database
     const newUser = await this.userRepo.createUser(userDetails);
-    logger.info("user created ");
-    // prepare jwt token
 
-    const token = jwt.sign(newUser, serverConfig.JWT_SECRET);
+    const token = await this.#generateToken(newUser);
+    return token;
+  }
+  // Login User
+  async loginUser(userData: LoginUserRequestType) {
+    logger.info("user-service");
+    // check if user exists
+    const user = await this.#getUserByEmail(userData.email);
+    if (!user) {
+      throw new NotFoundError("user not found", {});
+    }
+    const token = await this.#generateToken(user);
+    return token;
+  }
+
+  async #getUserByEmail(email: string) {
+    return this.userRepo.findByEmail(email);
+  }
+  async #getHashedPassword(password: string) {
+    // create salt
+    const salt = await bcrypt.genSalt(10);
+    // hash the password
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return hashedPassword;
+  }
+  async #generateToken(user: SelectUserSchema) {
+    // prepare jwt token
+    const token = jwt.sign(user, serverConfig.JWT_SECRET);
     logger.info(token);
     if (!token) {
       throw new InternalServerError("Token not created", {});
     }
-
     return token;
   }
 }
