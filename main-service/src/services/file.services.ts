@@ -22,7 +22,7 @@ class FileService {
 
     const newFile = await this.fileRepo.createFile({
       filename: file.filename,
-      content: "",
+      content: file.content || "",
       owner: userId,
       slug: slug,
     });
