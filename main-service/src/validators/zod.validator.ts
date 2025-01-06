@@ -4,10 +4,14 @@ import { z, ZodError } from "zod";
 import { StatusCodes } from "http-status-codes";
 import { ApiError, BadRequestError } from "../errors";
 
-const validate = (schema: z.ZodObject<any>) => {
+const validate = (schema: z.ZodObject<any>, isReqBody = true) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.parse(req.body);
+      if (isReqBody) {
+        schema.parse(req.body);
+      } else {
+        schema.parse(req.params);
+      }
       next();
     } catch (error) {
       if (error instanceof ZodError) {

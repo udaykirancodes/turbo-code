@@ -53,6 +53,13 @@ class FileService {
     }
     return res;
   }
+  async getAuthorizedFileBySlug(userId: number, slug: string) {
+    const res = await this.fileRepo.getAuthorisedFileBySlug(userId, slug);
+    if (!res) {
+      throw new BadRequestError("you are not allowed", {});
+    }
+    return res;
+  }
   private sluggify(str: string): string {
     return slugify(str, {
       trim: true,

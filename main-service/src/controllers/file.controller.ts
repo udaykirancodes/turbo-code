@@ -105,10 +105,34 @@ async function getAuthorisedFile(
     next(error);
   }
 }
+// Get Authorized File
+async function getAuthorisedFileBySlug(
+  req: Request<{ slug: string }, {}, {}>, // {req.params} , {} , {req.body}
+  res: Response,
+  next: NextFunction
+) {
+  logger.info("file-controller : get user files");
+  try {
+    const user = req.user as CustomJwtPayload;
+
+    const slug = req.params.slug;
+
+    const file = await fileService.getAuthorizedFileBySlug(user.id, slug);
+    if (!file) {
+      throw new BadRequestError("Unable get the file", {});
+    }
+    return res
+      .status(StatusCodes.OK)
+      .json(new ApiResponse(StatusCodes.OK, "File fetched successfully", file));
+  } catch (error) {
+    next(error);
+  }
+}
 
 export default {
   createFile,
   updateFile,
   getUserFiles,
   getAuthorisedFile,
+  getAuthorisedFileBySlug,
 };

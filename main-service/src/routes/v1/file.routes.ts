@@ -3,6 +3,7 @@ import fileController from "../../controllers/file.controller";
 import { authorize } from "../../middlewares/authorize";
 import {
   createFileRequestSchema,
+  slugSchema,
   updateFileSchema,
 } from "../../types/file.type";
 import { validate } from "../../validators";
@@ -21,11 +22,23 @@ fileRouter.get("/", authorize, fileController.getUserFiles);
 // Update a File
 fileRouter.put(
   "/:id",
-  authorize,
   validate(updateFileSchema),
+  authorize,
   fileController.updateFile
 );
 // Get users single file
-fileRouter.get("/:id", authorize, fileController.getAuthorisedFile);
+// fileRouter.get(
+//   "/:id",
+//   validate(idSchema, false),
+//   authorize,
+//   fileController.getAuthorisedFile
+// );
+// Get user file by slug
+fileRouter.get(
+  "/:slug",
+  validate(slugSchema, false),
+  authorize,
+  fileController.getAuthorisedFileBySlug
+);
 
 export default fileRouter;
