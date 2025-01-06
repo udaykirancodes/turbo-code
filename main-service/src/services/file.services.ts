@@ -1,6 +1,10 @@
 import slugify from "slugify";
+import { BadRequestError, NotFoundError } from "../errors";
 import FileRepository from "../repositories/file.repository";
-import { CreateFileRequestType } from "../types/file.type";
+import {
+  CreateFileRequestType,
+  UpdateFileRequestType,
+} from "../types/file.type";
 class FileService {
   private fileRepo: FileRepository;
   constructor(fr: FileRepository) {
@@ -17,6 +21,24 @@ class FileService {
       owner: userId,
       slug: slug,
     });
+    return newFile;
+  }
+  async updateFile(
+    file: UpdateFileRequestType,
+    userId: number,
+    fileId: number
+  ) {
+    // get the file
+    const f = await this.fileRepo.getFileByFileId(fileId);
+    if (!f) {
+      throw new NotFoundError("file not found", {});
+    }
+    const res = await this.fileRepo.getAuthorisedFileByFileId(userId, fileId);
+    if (!res) {
+      throw new BadRequestError("you are not allowed", {});
+    }
+    // check if user has access
+    const newFile = await this.fileRepo.updateFile(file, fileId);
     return newFile;
   }
   private sluggify(str: string): string {
