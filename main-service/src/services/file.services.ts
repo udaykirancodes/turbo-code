@@ -41,6 +41,18 @@ class FileService {
     const newFile = await this.fileRepo.updateFile(file, fileId);
     return newFile;
   }
+  async getUserFiles(userId: number) {
+    // get the file
+    const files = await this.fileRepo.getUserFilesByUserId(userId);
+    return files;
+  }
+  async getAuthorizedFileById(userId: number, fileId: number) {
+    const res = await this.fileRepo.getAuthorisedFileByFileId(userId, fileId);
+    if (!res) {
+      throw new BadRequestError("you are not allowed", {});
+    }
+    return res;
+  }
   private sluggify(str: string): string {
     return slugify(str, {
       trim: true,

@@ -58,8 +58,57 @@ async function updateFile(
     next(error);
   }
 }
+// Get User Files
+async function getUserFiles(
+  req: Request<{}, {}, {}>, // {req.params} , {} , {req.body}
+  res: Response,
+  next: NextFunction
+) {
+  logger.info("file-controller : get user files");
+  try {
+    const user = req.user as CustomJwtPayload;
+
+    const files = await fileService.getUserFiles(user.id);
+    if (!files) {
+      throw new BadRequestError("Unable to update file", {});
+    }
+    logger.debug("all the files : ", files);
+    return res
+      .status(StatusCodes.OK)
+      .json(
+        new ApiResponse(StatusCodes.OK, "Files fetched successfully", files)
+      );
+  } catch (error) {
+    next(error);
+  }
+}
+// Get Authorized File
+async function getAuthorisedFile(
+  req: Request<{ id: string }, {}, {}>, // {req.params} , {} , {req.body}
+  res: Response,
+  next: NextFunction
+) {
+  logger.info("file-controller : get user files");
+  try {
+    const user = req.user as CustomJwtPayload;
+
+    const fileId = Number(req.params.id);
+
+    const file = await fileService.getAuthorizedFileById(user.id, fileId);
+    if (!file) {
+      throw new BadRequestError("Unable get the file", {});
+    }
+    return res
+      .status(StatusCodes.OK)
+      .json(new ApiResponse(StatusCodes.OK, "File fetched successfully", file));
+  } catch (error) {
+    next(error);
+  }
+}
 
 export default {
   createFile,
   updateFile,
+  getUserFiles,
+  getAuthorisedFile,
 };

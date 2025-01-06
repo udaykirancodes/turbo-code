@@ -1,6 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "../db";
 import { files } from "../db/schema";
+import { NotFoundError } from "../errors";
 import { CreateFileType, UpdateFileRequestType } from "../types/file.type";
 
 class FileRepository {
@@ -9,7 +10,7 @@ class FileRepository {
       const res = await db.insert(files).values(file).returning();
       return res[0];
     } catch (error) {
-      throw new Error("error occured at file creation");
+      throw error;
     }
   }
   async updateFile(file: UpdateFileRequestType, id: number) {
@@ -21,7 +22,7 @@ class FileRepository {
         .returning();
       return res[0];
     } catch (error) {
-      throw new Error("error occured at file creation");
+      throw error;
     }
   }
   async getFileByFileId(id: number) {
@@ -29,9 +30,12 @@ class FileRepository {
       const res = await db.query.files.findFirst({
         where: eq(files.id, id),
       });
+      if (!res) {
+        throw new NotFoundError("File not found", {});
+      }
       return res;
     } catch (error) {
-      throw new Error("error occured at file creation");
+      throw error;
     }
   }
   async getAuthorisedFileByFileId(userId: number, id: number) {
@@ -39,9 +43,22 @@ class FileRepository {
       const res = await db.query.files.findFirst({
         where: and(eq(files.id, id), eq(files.owner, userId)),
       });
+      if (!res) {
+        throw new NotFoundError("File not found", {});
+      }
       return res;
     } catch (error) {
-      throw new Error("error occured at file creation");
+      throw error;
+    }
+  }
+  async getUserFilesByUserId(userId: number) {
+    try {
+      const res = await db.query.files.findMany({
+        where: and(eq(files.owner, userId)),
+      });
+      return res;
+    } catch (error) {
+      throw error;
     }
   }
 }
