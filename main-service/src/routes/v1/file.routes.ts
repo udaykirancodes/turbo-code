@@ -26,13 +26,6 @@ fileRouter.put(
   authorize,
   fileController.updateFile
 );
-// Get users single file
-// fileRouter.get(
-//   "/:id",
-//   validate(idSchema, false),
-//   authorize,
-//   fileController.getAuthorisedFile
-// );
 // Get user file by slug
 fileRouter.get(
   "/:slug",

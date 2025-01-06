@@ -14,7 +14,12 @@ class FileService {
   async createFile(file: CreateFileRequestType, userId: number) {
     // create slug
     const slug = this.sluggify(file.filename);
-    // TODO :  check if already slug found
+
+    // check
+    const res = await this.checkIfFileExistsWithSlug(slug);
+
+    if (res) throw new BadRequestError("same filename already exists", {});
+
     const newFile = await this.fileRepo.createFile({
       filename: file.filename,
       content: "",
@@ -59,6 +64,15 @@ class FileService {
       throw new BadRequestError("you are not allowed", {});
     }
     return res;
+  }
+  private async checkIfFileExistsWithSlug(slug: string): Promise<boolean> {
+    try {
+      const res = await this.fileRepo.getFileBySlug(slug);
+      if (res) return true;
+      return false;
+    } catch (error) {
+      return false;
+    }
   }
   private sluggify(str: string): string {
     return slugify(str, {

@@ -64,6 +64,19 @@ class FileRepository {
       throw error;
     }
   }
+  async getFileBySlug(slug: string) {
+    try {
+      const res = await db.query.files.findFirst({
+        where: eq(files.slug, slug),
+      });
+      if (!res) {
+        throw new NotFoundError("File not found", {});
+      }
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
   async getUserFilesByUserId(userId: number) {
     try {
       const res = await db.query.files.findMany({
