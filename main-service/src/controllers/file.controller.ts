@@ -47,9 +47,10 @@ async function updateFile(
     const fileId = Number(req.params.id);
 
     const file = await fileService.updateFile(req.body, user.id, fileId);
-
     if (!file) {
-      throw new BadRequestError("Unable to update file", {});
+      throw new BadRequestError("Unable to update file", {
+        from: "controller",
+      });
     }
     return res
       .status(StatusCodes.CREATED)

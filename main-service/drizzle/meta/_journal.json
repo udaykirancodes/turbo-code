@@ -22,6 +22,20 @@
       "when": 1735994983976,
       "tag": "0002_strange_shinko_yamashiro",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1736206966989,
+      "tag": "0003_long_frog_thor",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1736207318710,
+      "tag": "0004_wet_the_enforcers",
+      "breakpoints": true
     }
   ]
 }

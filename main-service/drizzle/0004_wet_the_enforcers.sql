@@ -1,0 +1,1 @@
+ALTER TABLE "files" ADD COLUMN "updated_at" timestamp DEFAULT now() NOT NULL;

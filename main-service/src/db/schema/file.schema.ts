@@ -1,5 +1,11 @@
-import { relations } from "drizzle-orm";
-import { integer, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { relations, sql } from "drizzle-orm";
+import {
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { users } from "./user.schema";
 
 export const files = pgTable("files", {
@@ -7,6 +13,11 @@ export const files = pgTable("files", {
   filename: varchar().notNull(),
   slug: varchar().notNull(),
   content: text(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at")
+    .notNull()
+    .defaultNow()
+    .$onUpdateFn(() => sql`CURRENT_TIMESTAMP`),
   owner: integer()
     .notNull()
     .references(() => users.id),

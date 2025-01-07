@@ -14,14 +14,11 @@ function errorHandler(
       .status(err.statusCode)
       .json(new ApiResponse(err.statusCode, err.message, {}));
   }
+  const error = new InternalServerError(err.message, {});
   return res
     .status(StatusCodes.INTERNAL_SERVER_ERROR)
     .json(
-      new ApiResponse(
-        StatusCodes.INTERNAL_SERVER_ERROR,
-        "Something went wrong",
-        new InternalServerError(err.message, err)
-      )
+      new ApiResponse(StatusCodes.INTERNAL_SERVER_ERROR, error.message, {})
     );
 }
 

@@ -5,6 +5,7 @@ import {
   CreateFileRequestType,
   UpdateFileRequestType,
 } from "../types/file.type";
+import { logger } from "../utils/logger";
 class FileService {
   private fileRepo: FileRepository;
   constructor(fr: FileRepository) {
@@ -33,17 +34,19 @@ class FileService {
     userId: number,
     fileId: number
   ) {
+    logger.info("file-service : updated file");
     // get the file
     const f = await this.fileRepo.getFileByFileId(fileId);
     if (!f) {
       throw new NotFoundError("file not found", {});
     }
-    const res = await this.fileRepo.getAuthorisedFileByFileId(userId, fileId);
-    if (!res) {
+    const isAuthorized = f.owner === userId;
+    if (!isAuthorized) {
       throw new BadRequestError("you are not allowed", {});
     }
     // check if user has access
-    const newFile = await this.fileRepo.updateFile(file, fileId);
+    const newFile = await this.fileRepo.updateFile(file, fileId, userId);
+    logger.info("file updated");
     return newFile;
   }
   async getUserFiles(userId: number) {
